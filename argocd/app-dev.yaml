@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook-dev
+  namespace: argocd
+  # Cascade delete: remove app resources when Application is deleted
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+
+  source:
+    # TODO: replace with your actual Git remote URL after pushing
+    repoURL: https://github.com/<YOUR-USERNAME>/gitops-example.git
+    targetRevision: HEAD
+    path: apps/guestbook/overlays/dev
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: guestbook
+
+  syncPolicy:
+    automated:
+      prune: true       # delete resources removed from Git
+      selfHeal: true    # revert manual changes in cluster
+    syncOptions:
+    - CreateNamespace=true

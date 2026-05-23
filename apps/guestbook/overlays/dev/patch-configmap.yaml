@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: guestbook-config
+  namespace: guestbook
+data:
+  environment: dev
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head><title>GitOps Guestbook — DEV</title></head>
+    <body style="background:#fff3cd">
+      <h1>GitOps Guestbook</h1>
+      <p>Environment: <strong>DEV</strong></p>
+      <p>Deployed via Argo CD</p>
+    </body>
+    </html>
